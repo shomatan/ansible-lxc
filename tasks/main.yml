@@ -12,4 +12,4 @@
     - bridge-utils
 
 - name: Create bridge interface for LXC containers.
-  templates: src=ifcfg-lxcbr0.j2 dest=/etc/sysconfig/network-scripts/ifcfg-lxcbr0
+  template: src=ifcfg-lxcbr0.j2 dest=/etc/sysconfig/network-scripts/ifcfg-lxcbr0
