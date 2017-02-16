@@ -1,0 +1,15 @@
+---
+
+- name: Ensure LXC packages are installed.
+  yum: name={{ item }} enablerepo=epel
+  with_items:
+    - lxc
+    - lxc-templates
+    - lxc-doc
+    - lxc-libs
+    - rsync
+    - debootstrap
+    - bridge-utils
+
+- name: Create bridge interface for LXC containers.
+  templates: src=ifcfg-lxcbr0.j2 dest=/etc/sysconfig/network-scripts/ifcfg-lxcbr0
