@@ -1,5 +1,4 @@
 ---
-
 - name: Ensure LXC packages are installed.
   yum: name={{ item }} enablerepo=epel
   with_items:
@@ -10,6 +9,13 @@
     - rsync
     - debootstrap
     - bridge-utils
-
+    
 - name: Create bridge interface for LXC containers.
-  template: src=ifcfg-lxcbr0.j2 dest=/etc/sysconfig/network-scripts/ifcfg-lxcbr0
+  template:
+    src: ifcfg-lxcbr0.j2
+    dest: /etc/sysconfig/network-scripts/ifcfg-lxcbr0
+  register: result
+
+- name: Reboot lxc bridge interface.
+  shell: ifdown lxcbr0 ; ifup lxcbr0
+  when: result.changed
